@@ -1,0 +1,71 @@
+{% load static %}
+<div
+  class="container mx-auto flex md:grid-area justify-between py-5 px-5 items-center"
+>
+  <div class="song-details flex space-x-4">
+    <img
+      class="w-14 h-14 md:h-12 md:w-12 rounded-xl"
+      src="../../media/{{songs.cover_image}}"
+      alt=""
+    />
+    <div class="details">
+      <h2 class="text-lg md:text-sm font-bold">{{ songs.song_name }}</h2>
+      <p class="text-gray-400 text-sm">{{ songs.artist }}</p>
+    </div>
+  </div>
+  <div class="controls flex justify-center md:space-x-10 space-x-5 h-fit mt-5">
+    <svg class="control-icon hide">
+      <use xlink:href="{% static 'assets/controls.svg' %}#shuffle"></use>
+    </svg>
+    <svg class="control-icon hide">
+      <use xlink:href="{% static 'assets/controls.svg' %}#previous"></use>
+    </svg>
+    <div class="pause-play hover:opacity-80 cursor-pointer">
+      <img
+        class="play w-9 h-9 bg-yellow-400 rounded-full p-2"
+        src="{% static 'assets/play.svg' %}"
+        alt=""
+      />
+      <img
+        class="pause w-9 h-9 bg-yellow-400 rounded-full p-2 hidden"
+        src="{% static 'assets/pause.png' %}"
+        alt=""
+      />
+    </div>
+    <svg class="control-icon">
+      <use xlink:href="{% static 'assets/controls.svg' %}#next"></use></svg
+    ><svg class="control-icon hide">
+      <use xlink:href="{% static 'assets/controls.svg' %}#repeate-one"></use>
+    </svg>
+  </div>
+    <div
+      class="hide progress-bar w-[70%] mx-auto rounded-full bg-gray-500 h-1 cursor-pointer absolute bottom-4 -right-2 left-0"
+    >
+      <div
+        class="progress-fill bg-yellow-400 w-0 h-full absolute pointer-events-none"
+      ></div>
+      <div
+        class="progress-pin bg-yellow-400 rounded-full w-3 h-3 hover:w-[0.85rem] hover:h-[0.85rem] absolute -top-1 left-0 pointer-events-auto z-50"
+      >
+        <svg
+          class="w-5 h-5 hover:w-[1.35rem] hover:h-[1.35rem] fill-transparent stroke-white absolute -bottom-1 -left-1"
+        >
+          <use xlink:href="{% static 'assets/controls.svg' %}#Ellipse 8"></use>
+        </svg>
+      </div>
+    </div>
+  <div class="volume hide md:flex space-x-2 justify-center hover:opacity-70">
+    <img
+      src="{% static 'assets/volume-high.svg' %}"
+      alt="volume icon"
+      class="relative left-1 top-3"
+    />
+    <div
+      class="volume-bar w-[10rem] mt-6 mx-auto rounded-full bg-gray-500 h-1 cursor-pointer relative"
+    >
+      <div
+        class="volume-fill bg-yellow-400 w-[5rem] h-full absolute pointer-events-none"
+      ></div>
+    </div>
+  </div>
+</div>
