@@ -13,30 +13,41 @@
   }
 
   .control-icon {
-    @apply fill-white w-7 h-7 cursor-pointer hover:opacity-70
+    @apply fill-white w-7 h-7 cursor-pointer hover:opacity-70;
   }
 
   .hide {
-    @apply hidden md:block
+    @apply hidden md:block;
   }
 
   .nav-text {
-    @apply block sm:hidden text-gray-500 text-base font-bold
+    @apply block sm:hidden text-gray-500 text-base font-bold;
   }
 
-  .flex-nav{
+  .flex-nav {
     @apply flex space-x-8 md:block align-middle hover:text-yellow-400;
+  }
+
+  .album-control {
+    @apply flex space-x-2 align-middle bg-primary rounded-full py-2 px-11;
+  }
+
+  .active {
+    @apply bg-yellow-400;
+  }
+
+  .active-nav {
+    @apply fill-yellow-400 text-black;
   }
 
   .grid-area {
     @apply grid;
-    grid-template-areas: 
-    "info control volume"
-    "progress progress progress"
-    ;
+    grid-template-areas:
+      "info control volume"
+      "progress progress progress";
   }
 
-  .song_details{
+  .song_details {
     grid-area: info;
   }
 
@@ -46,7 +57,6 @@
 
   .progress {
     grid-area: progress;
-    
   }
 
   .volume {

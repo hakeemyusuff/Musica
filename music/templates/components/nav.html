@@ -1,5 +1,5 @@
 {% load static %}
-<div class="pt-6 md:pl-5 w-full md:w-fit">
+<div class="pt-6 md:pl-5 w-full md:w-fit fixed z-50">
   <div class="flex justify-between">
     <a href="#">
       <img
@@ -8,18 +8,31 @@
         class="md:mx-auto"
       />
     </a>
-    <div class="nav-control cursor-pointer pr-2 md:hidden hover:opacity-80">
-      <img class="nav-open" src="{% static 'assets/menu.png' %}" alt="">
-      <img class="nav-close hidden" src="{% static 'assets/close-circle.png' %}" alt="">
+    <div
+      class="nav-control cursor-pointer pr-2 md:hidden hover:opacity-80 mr-[2rem]"
+    >
+      <img class="nav-open" src="{% static 'assets/menu.png' %}" alt="" />
+      <img
+        class="nav-close hidden"
+        src="{% static 'assets/close-circle.png' %}"
+        alt=""
+      />
     </div>
   </div>
-  <nav class="nav-menu hidden md:block fixed z-50 top-[3rem] md:top-[4rem] md:left-[2rem]">
-    <div class="bg-background md:bg-transparent pb-[23rem] md:pb-0 z-20 px-3 pr-[15rem] md:pr-0 md:px-0 mx-auto">
+  <nav class="nav-menu hidden md:block z-50 top-0 md:top-[4rem] md:left-[2rem]">
+    <div
+      class="bg-background md:bg-transparent pb-[23rem] md:pb-0 z-20 px-3 pr-[15rem] pt-[2rem] md:pr-0 md:px-0 mx-auto"
+    >
       <ul class="nav-list mt-9">
         <li>
-          <a href="#" class="nav-link flex-nav">
+          <a
+            href=""
+            class="nav-link flex-nav"
+            hx-post="{% url 'media' %}"
+            hx-target="#body"
+          >
             <svg
-              class="icon w-12 h-12 md:m-auto -ml-3 -mb-2 md:-mb-3 fill-gray-100 hover:fill-yellow-200"
+              class="icon w-12 h-12 md:m-auto -ml-3 -mb-2 md:-mb-3 fill-gray-100 hover:fill-yellow-200 {% if section == 'home' %} active-nav {% endif %}"
             >
               <use xlink:href="{% static 'assets/nav-icons.svg' %}#Home"></use>
             </svg>
@@ -27,8 +40,13 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link flex-nav">
-            <svg class="nav-icon">
+          <a
+            href=""
+            class="nav-link flex-nav"
+            hx-post="{% url 'collection' %}"
+            hx-target="#home"
+          >
+            <svg class="nav-icon {% if section == 'collection' %} active-nav {% endif %}">
               <use
                 xlink:href="{% static 'assets/nav-icons.svg' %}#playlist"
               ></use>
@@ -39,7 +57,9 @@
         <li>
           <a href="#" class="nav-link flex-nav">
             <svg class="nav-icon">
-              <use xlink:href="{% static 'assets/nav-icons.svg' %}#videos"></use>
+              <use
+                xlink:href="{% static 'assets/nav-icons.svg' %}#videos"
+              ></use>
             </svg>
             <span class="nav-text">Videos</span>
           </a>
@@ -49,7 +69,9 @@
         <li>
           <a href="#" class="flex-nav">
             <svg class="nav-icon">
-              <use xlink:href="{% static 'assets/nav-icons.svg' %}#profile"></use>
+              <use
+                xlink:href="{% static 'assets/nav-icons.svg' %}#profile"
+              ></use>
             </svg>
             <span class="nav-text">Profile</span>
           </a>
@@ -57,14 +79,12 @@
         <li>
           <a href="#" class="flex-nav"
             ><svg class="nav-icon">
-              <use xlink:href="{% static 'assets/nav-icons.svg' %}#Logout"></use>
+              <use
+                xlink:href="{% static 'assets/nav-icons.svg' %}#Logout"
+              ></use>
             </svg>
             <span class="nav-text">
-      
-              {% if request.user.is_authenticated %}
-                Log out
-              {% else %}
-                Login
+              {% if request.user.is_authenticated %} Log out {% else %} Login 
               {% endif %}
             </span>
           </a>

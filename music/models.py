@@ -10,7 +10,7 @@ class Album(models.Model):
     release_date = models.DateField(blank=True, null=True)
     album_description = models.TextField()
     album_cover = models.ImageField(upload_to="album_cover/", blank=True)
-    
+
     class Meta:
         ordering = ["-release_date"]
 
@@ -27,7 +27,7 @@ class Playlist(models.Model):
         on_delete=models.CASCADE,
         related_name="playlists",
     )
-    
+
     class Meta:
         ordering = ["-created_date"]
 
@@ -47,7 +47,7 @@ class Song(models.Model):
 
     class Meta:
         ordering = ["-release_date"]
-        
+
     def __str__(self) -> str:
         return self.song_name
 
@@ -56,9 +56,12 @@ class SongLike(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+    )
+    song = models.ForeignKey(
+        Song,
+        on_delete=models.CASCADE,
         related_name="liked_songs",
     )
-    song = models.ForeignKey(Song, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ["user", "song"]
@@ -74,10 +77,10 @@ class AlbumLike(models.Model):
         related_name="liked_albums",
     )
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
-    
+
     class Meta:
         unique_together = ["user", "album"]
-        
+
     def __str__(self) -> str:
         return self.album.title
 

@@ -1,5 +1,7 @@
 let playBtn = document.querySelector(".play");
 let pauseBtn = document.querySelector(".pause");
+let nextBtn = document.querySelector(".next");
+let prevBtn = document.querySelector(".prev");
 let playPause = document.querySelector(".pause-play");
 let audioPlayer = document.querySelector(".audio-player");
 let volumeBar = document.querySelector(".volume-bar");
@@ -7,23 +9,25 @@ let VolumeFill = document.querySelector(".volume-fill");
 let progressBar = document.querySelector(".progress-bar");
 let progressFill = document.querySelector(".progress-fill");
 let progressPin = document.querySelector(".progress-pin");
-const navOpen = document.querySelector(".nav-open")
-const navClose = document.querySelector(".nav-close")
-const navMenu = document.querySelector(".nav-menu")
-const navControl = document.querySelector(".nav-control")
+const navOpen = document.querySelector(".nav-open");
+const navClose = document.querySelector(".nav-close");
+const navMenu = document.querySelector(".nav-menu");
+const navControl = document.querySelector(".nav-control");
+let songs = document.querySelectorAll(".song");
+let songUrl = document.querySelector(".song-url");
 
 navControl.addEventListener("click", () => {
-  if (navMenu.classList.contains("hidden")){
-    navMenu.classList.remove("hidden")
+  if (navMenu.classList.contains("hidden")) {
+    navMenu.classList.remove("hidden");
     // navMenu.classList.add("scale-50")
-    navClose.classList.remove("hidden")
-    navOpen.classList.add("hidden")
-  }else{
-    navMenu.classList.add("hidden")
-    navClose.classList.add("hidden")
-    navOpen.classList.remove("hidden")
+    navClose.classList.remove("hidden");
+    navOpen.classList.add("hidden");
+  } else {
+    navMenu.classList.add("hidden");
+    navClose.classList.add("hidden");
+    navOpen.classList.remove("hidden");
   }
-})
+});
 
 //Controls the playing and pausing of the player
 playPause.addEventListener("click", () => {
@@ -143,3 +147,165 @@ addListeners(["mousemove"], progressPin, (e) => {
 // }
 
 // getSongsData(url)
+// function PlaySong(song) {
+//   const songUrl = song.getAttribute("data-url");
+//   const songName = song.getAttribute("data-song-name");
+//   const songCover = song.getAttribute("data-image");
+//   const songArtist = song.getAttribute("data-artist");
+
+//   audioPlayer.innerHTML = "";
+//   audioPlayer.innerHTML = `<source src='../../media/${songUrl}' type='audio/mpeg'>`;
+//   audioPlayer.load();
+
+//   document.querySelector(".song-name").innerText = songName;
+//   document.querySelector(".song-artist").innerText = songArtist;
+//   document.querySelector(".player-image").src = `../../media/${songCover}`;
+
+//   audioPlayer.play();
+//   playBtn.classList.add("hidden");
+//   pauseBtn.classList.remove("hidden");
+// }
+
+// let currentPlaylist = {
+//   songs: [],
+//   currentIndex: 0,
+// };
+
+// for (let song of songs) {
+//   song.addEventListener("click", () => {
+//     const playListSongs = Array.from(songs);
+//     const clickedSongIndex = playListSongs.indexOf(song);
+
+//     currentPlaylist = {
+//       songs: playListSongs,
+//       currentIndex: clickedSongIndex,
+//     };
+//     PlaySong(song);
+//   });
+// }
+
+// playNextSong = () => {
+//   if (currentPlaylist.songs.length === 0) return;
+
+//   currentPlaylist.currentIndex =
+//     (currentPlaylist.currentIndex + 1) % currentPlaylist.songs.length;
+//   const nextSong = currentPlaylist.songs[currentPlaylist.currentIndex];
+//   PlaySong(nextSong);
+// };
+
+// nextBtn.addEventListener("click", () => {
+//   playNextSong();
+// });
+
+// prevBtn.addEventListener("click", () => {
+//   if (currentPlaylist.songs.length === 0) return;
+
+//   currentPlaylist.currentIndex =
+//     (currentPlaylist.currentIndex - 1 + currentPlaylist.songs.length) %
+//     currentPlaylist.songs.length;
+//   const prevSong = currentPlaylist.songs[currentPlaylist.currentIndex];
+//   PlaySong(prevSong);
+// });
+// audioPlayer.addEventListener("ended", () => {
+//   playNextSong();
+// });
+
+
+
+
+// document.body.addEventListener("htmx:afterOnLoad", setupSongListeners);
+
+function setupSongListeners() {
+  let songs = document.querySelectorAll(".song");
+  let audioPlayer = document.querySelector(".audio-player");
+  let playBtn = document.querySelector(".play");
+  let pauseBtn = document.querySelector(".pause");
+  let nextBtn = document.querySelector(".next");
+  let prevBtn = document.querySelector(".prev");
+
+  let currentPlaylist = {
+    songs: [],
+    currentIndex: 0,
+  };
+
+  function PlaySong(song) {
+    const songUrl = song.getAttribute("data-url");
+    const songName = song.getAttribute("data-song-name");
+    const songCover = song.getAttribute("data-image");
+    const songArtist = song.getAttribute("data-artist");
+
+    audioPlayer.innerHTML = "";
+    audioPlayer.innerHTML = `<source src='../../media/${songUrl}' type='audio/mpeg'>`;
+    audioPlayer.load();
+
+    document.querySelector(".song-name").innerText = songName;
+    document.querySelector(".song-artist").innerText = songArtist;
+    document.querySelector(".player-image").src = `../../media/${songCover}`;
+
+    audioPlayer.play();
+    playBtn.classList.add("hidden");
+    pauseBtn.classList.remove("hidden");
+  }
+
+  function playNextSong() {
+    if (currentPlaylist.songs.length === 0) return;
+
+    currentPlaylist.currentIndex =
+      (currentPlaylist.currentIndex + 1) % currentPlaylist.songs.length;
+    const nextSong = currentPlaylist.songs[currentPlaylist.currentIndex];
+    PlaySong(nextSong);
+  }
+
+  function playPrevSong() {
+    if (currentPlaylist.songs.length === 0) return;
+
+    currentPlaylist.currentIndex =
+      (currentPlaylist.currentIndex - 1 + currentPlaylist.songs.length) %
+      currentPlaylist.songs.length;
+    const prevSong = currentPlaylist.songs[currentPlaylist.currentIndex];
+    PlaySong(prevSong);
+  }
+
+  // Remove existing event listeners to prevent duplicates
+  songs.forEach((song) => {
+    song.removeEventListener("click", songClickHandler);
+  });
+
+  // Song click handler
+  function songClickHandler() {
+    const playListSongs = Array.from(songs);
+    const clickedSongIndex = playListSongs.indexOf(this);
+
+    currentPlaylist = {
+      songs: playListSongs,
+      currentIndex: clickedSongIndex,
+    };
+    PlaySong(this);
+  }
+
+  // Add click listeners to songs
+  songs.forEach((song) => {
+    song.addEventListener("click", songClickHandler);
+  });
+
+  // Remove existing event listeners on next and prev buttons
+  if (nextBtn) {
+    nextBtn.removeEventListener("click", playNextSong);
+    nextBtn.addEventListener("click", playNextSong);
+  }
+
+  if (prevBtn) {
+    prevBtn.removeEventListener("click", playPrevSong);
+    prevBtn.addEventListener("click", playPrevSong);
+  }
+
+  // Auto-play next song when current song ends
+  audioPlayer.removeEventListener("ended", playNextSong);
+  audioPlayer.addEventListener("ended", playNextSong);
+}
+
+// Initial setup
+document.addEventListener("DOMContentLoaded", setupSongListeners);
+
+// HTMX-specific event to re-run setup after dynamic content load
+document.body.addEventListener("htmx:afterOnLoad", setupSongListeners);

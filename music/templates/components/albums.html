@@ -1,0 +1,80 @@
+{% load static %}
+
+<div class="bg-pimary">
+  <div
+    class="relative w-full md:w-[95%] h-[27rem] mr-0 md:ml-[5rem] text-white"
+    style="background-image: url('../../../media/{{ album.album_cover }}'); background-size: cover; background-position: center;"
+  >
+    <div class="absolute inset-0 bg-black opacity-60 cursor-pointer"></div>
+    <div class="md:flex items-end space-x-4 p-4 relative">
+      <img
+        class="w-[22rem] md:w-[18rem] h-auto rounded-3xl object-cover mt-[4rem]"
+        src="../../../media/{{ album.album_cover }}"
+        alt="album cover"
+      />
+      <div class="ml-0 text-[0.875rem]">
+        <h1 class="text-[2.18rem] font-bold text-[#A4C7C6]">
+          {{ album.title }}
+        </h1>
+        <p>{{ album.album_description }}</p>
+        <p class="pt-4">
+          {{ songs | length}} songs ~ {{ album_duration|floatformat:"2" }} hrs
+        </p>
+        <div class="flex justify-between pt-5">
+          <div class="album-control">
+            <img
+              class="size-6"
+              src="{% static 'assets/Play-yellow.png' %}"
+              alt=""
+            />
+            <span>Play all</span>
+          </div>
+          <!-- <div class="album-control">
+            <img
+              class="size-4"
+              src="{% static 'assets/music-square-add.png' %}"
+              alt=""
+            />
+            <span>Add to collection</span>
+          </div> -->
+          <div class="album-control">
+            <img
+              class="size-6"
+              src="{% static 'assets/Heart-red.png' %}"
+              alt=""
+            />
+            <span>Like</span>
+          </div>
+        </div>
+      </div>
+    </div>  
+    <div class="md:mt-[5rem] mb-[10rem]">
+      {% for song in songs %}
+      <div
+        class="song bg-primary flex cursor-pointer my-2 py-4 px-3 rounded-xl justify-between hover:opacity-75"
+        data-url="{{ song.song_url }}"
+        data-image="{{ song.cover_image }}"
+        data-song-name="{{ song.song_name }}"
+        data-artist="{{ song.artist }}"
+      >
+        <div class="flex">
+          <img
+            class="size-12 rounded-sm"
+            src="../../../media/{{ song.cover_image }}"
+            alt=""
+          />
+          <h2 class="pl-[1rem]">{{ song.song_name }} ~ {{ song.artist }}</h2>
+        </div>
+        <div>
+          <img
+            class="size-4 hover:opacity-50"
+            src="{% static 'assets/play.svg' %}"
+            alt="play button"
+          />
+          <p class="">{{ song.duration }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

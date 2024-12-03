@@ -1,43 +1,88 @@
 {% load static %}
 
-<div class="md:grid grid-cols-3 md:left-24 gap-4 relative h-fit">
-<div
-  class="relative text-white mt-7 rounded-[1.25rem] px-8 py-8 md:pr-[22.81rem] col-span-2"
-  style="background-image: url('/media/{{ most_liked_album.album_cover }}'); background-size: cover; background-position: center;"
->
-  <div
-    class="absolute inset-0 bg-black opacity-40 cursor-pointer rounded-[1.25rem]"
-    hx-trigger="click"
-  ></div>
-  <p class="relative text-[0.75rem]">Most liked album</p>
-  <div class="mt-[14.75rem] md:mt-[5.31rem]">
-    <h1 class="relative text-[2.1875rem] font-bold">
-      {{ most_liked_album.title }}
-    </h1>
-    <p class="relative text-[0.875rem]">
-      {{most_liked_album.album_description}}
-    </p>
-  </div>
-  <div class="flex gap-3 items-center mt-11 md:mt-16">
-    <img class="relative size-7" src="{% static 'assets/Heart.png' %}" alt="" />
-    <p class="relative text-[1.875rem]">
-      {{most_liked_album.likes}} Like{{most_liked_album.likes|pluralize}}
-    </p>
-  </div>
-</div>
-<div class="charts mt-12">
-  <h1 class="text-xl font-bold">Top charts</h1>
-
-  <div class="hidden md:block">
-    <div class="cursor-pointer" hx-trigger="click">
-      {% for album in liked_albums %}
-      <div class="bg-primary flex items-start space-between rounded-2xl mt-3">
+<div class="md:ml-[7rem] mt-[5rem] md:mt-2">
+  <div class="md:grid grid-cols-3 gap-6 relative h-fit">
+    <div
+      class="relative text-white mt-7 rounded-[1.25rem] px-8 py-8 md:pr-[22.81rem] col-span-2"
+      style="background-image: url('/media/{{ most_liked_album.album_cover }}'); background-size: cover; background-position: center;"
+      hx-target="#home"
+      hx-trigger="click"
+      hx-post="{% url 'album_songs' most_liked_album.id %}"
+    >
+      <div
+        class="absolute inset-0 bg-black opacity-40 cursor-pointer rounded-[1.25rem]"
+      ></div>
+      <p class="relative text-[0.75rem]">Most liked album</p>
+      <div class="mt-[14.75rem] md:mt-[5.31rem]">
+        <h1 class="relative text-[2.1875rem] font-bold">
+          {{ most_liked_album.title }}
+        </h1>
+        <p class="relative text-[0.875rem]">
+          {{most_liked_album.album_description}}
+        </p>
+      </div>
+      <div class="flex gap-3 items-center mt-11 md:mt-16">
         <img
-          class="size-[6rem] rounded-[0.625rem]"
-          src="../../../media/{{ album.album_cover }}"
+          class="relative size-7"
+          src="{% static 'assets/Heart.png' %}"
           alt=""
         />
-        <div class="pr-[11rem] pl-4">
+        <p class="relative text-[1.875rem]">
+          {{most_liked_album.likes}} Like{{most_liked_album.likes|pluralize}}
+        </p>
+      </div>
+    </div>
+    <div class="charts mt-12 md:mt-6">
+      <h1 class="text-xl font-bold">Top charts</h1>
+
+      <div class="hidden md:block">
+        <div class="cursor-pointer">
+          {% for album in liked_albums %}
+          <div
+            class="bg-primary flex items-start justify-between rounded-2xl mt-3"
+            hx-trigger="click"
+            hx-target="#home"
+            hx-post="{% url 'album_songs' album.id %}"
+          >
+            <div class="flex items-start">
+              <img
+                class="size-[6rem] rounded-[0.625rem]"
+                src="../../../media/{{ album.album_cover }}"
+                alt=""
+              />
+              <div class="pl-4">
+                <h2 class="text-base py-2">{{ album.title }}</h2>
+                <p class="text-sm text-gray-400">{{ album.artist }}</p>
+                <p class="text-[0.875rem] py-3">{{ album.album_duration }}</p>
+              </div>
+            </div>
+            <img
+              class="size-[2.3rem] relative top-4 right-3"
+              src="{% static 'assets/heart.png' %}"
+              alt=""
+            />
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div
+      class="carousel carousel-center max-w-md space-x-4 p-4 md:hidden w-full mb-6 cursor-pointer"
+      hx-trigger="click"
+    >
+      {% for album in liked_albums %}
+      <div
+        class="carousel-item bg-primary flex items-start rounded-2xl cursor-pointer"
+        hx-trigger="click"
+        hx-target="#home"
+        hx-post="{% url 'album_songs' album.id %}"
+      >
+        <div class="pr-[11rem] pl-4 py-4">
+          <img
+            class="size-[6rem] rounded-[0.625rem]"
+            src="../../../media/{{ album.album_cover }}"
+            alt=""
+          />
           <h2 class="text-base py-2">{{ album.title }}</h2>
           <p class="text-sm text-gray-400">{{ album.artist }}</p>
           <p class="text-[0.875rem] py-3">{{ album.album_duration }}</p>
@@ -51,29 +96,31 @@
       {% endfor %}
     </div>
   </div>
-  <div
-    class="carousel carousel-center max-w-md space-x-4 p-4 md:hidden w-full mb-[10rem] cursor-pointer"
-    hx-trigger="click"
-  >
-    {% for album in liked_albums %}
-    <div class="carousel-item bg-primary flex items-start rounded-2xl">
-      <div class="pr-[11rem] pl-4 py-4">
-        <img
-          class="size-[6rem] rounded-[0.625rem]"
-          src="../../../media/{{ album.album_cover }}"
-          alt=""
-        />
-        <h2 class="text-base py-2">{{ album.title }}</h2>
-        <p class="text-sm text-gray-400">{{ album.artist }}</p>
-        <p class="text-[0.875rem] py-3">{{ album.album_duration }}</p>
+  <div class="md:mt-12 mb-[5rem]">
+    <h1 class="text-xl font-bold">New releases</h1>
+    <div
+      class="carousel carousel-center space-x-4 p-4 w-full mb-6 cursor-pointer"
+      hx-trigger="click"
+    >
+      {% for song in songs %}
+      <div
+        class="carousel-item rounded-2xl cursor-pointer song"
+        data-url="{{ song.song_url }}"
+        data-image="{{ song.cover_image }}"
+        data-song-name="{{ song.song_name }}"
+        data-artist="{{ song.artist }}"
+      >
+        <div class="">
+          <img
+            class="size-[8rem] md:size-[12rem] rounded-[0.625rem]"
+            src="../../../media/{{ song.cover_image }}"
+            alt=""
+          />
+          <h2 class="text-base py-2">{{ song.song_name }}</h2>
+          <p class="text-sm text-gray-400">{{ song.artist }}</p>
+        </div>
       </div>
-      <img
-        class="size-[2.3rem] relative top-4 right-3"
-        src="{% static 'assets/heart.png' %}"
-        alt=""
-      />
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
-</div>
 </div>

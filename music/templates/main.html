@@ -13,14 +13,14 @@
       rel="stylesheet"
     />
   </head>
-  <body class="bg-background text-white font-sans">
+  <body class="text-white font-sans" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' id="body">
     <header></header>
     <div class="container px-5 flex">{% include 'components/nav.html' %}</div>
-    <div class="container px-5">
+    <div class="container px-5" id="home">
       {% include 'components/home.html' %}
     </div>
     <audio class="audio-player hidden" controls>
-      <source src="../../media/{{ songs.song_url }}" type="audio/mp3" />
+      <source src="" type="audio/mp3" />
     </audio>
     
     <div
