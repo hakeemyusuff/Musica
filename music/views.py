@@ -1,8 +1,9 @@
 from rest_framework import generics
 from django.shortcuts import get_object_or_404, render
 from .models import Album, Playlist, Song, SongLike, Collection
-from .serializers import PlaylistSerializer, SongSerializer
+# from .serializers import PlaylistSerializer, SongSerializer
 from django.db.models import Count, Sum
+from django.contrib.auth.decorators import login_required
 
 
 # def list_song(request):
@@ -44,7 +45,7 @@ def get_album_songs(request, id):
 # def collection_page(request):
 #     return render(request, "components/collection-page.html")
 
-
+@login_required
 def get_collection(request):
     collections = Collection.objects.filter(user=request.user)
     albums = [collection.album for collection in collections]
@@ -53,7 +54,8 @@ def get_collection(request):
         "components/collection-page.html",
         {"albums": albums, "section": "collection"},
     )
-
+    
+@login_required
 def get_liked_songs(request):
     liked_songs = Song.objects.filter(liked_songs__user=request.user)
     return render(request, "components/likes.html", {"liked_songs": liked_songs, "section": "likes"})

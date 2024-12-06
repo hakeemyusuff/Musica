@@ -93,5 +93,8 @@ class Collection(models.Model):
     )
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = ["user", "album"]
+
     def __str__(self) -> str:
         return self.album.title

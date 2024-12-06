@@ -62,4 +62,141 @@
   .volume {
     grid-area: volume;
   }
+
+  .login {
+    margin-top: 4.4rem;
+    background-color: #1d2123;
+    border-radius: 2.5rem;
+    padding: 3.5rem 2rem 23rem;
+    font-size: 1rem;
+
+    /* width: 100%;
+    height: 100vh */
+  }
+
+  .head {
+    text-align: center;
+  }
+
+  .head h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .head p {
+    color: #94a3b8;
+    font-size: 1rem;
+    font-weight: 400;
+    padding-block: 1rem;
+    /* padding-inline: 1.2rem; */
+  }
+
+  .head .img_1 {
+    display: none;
+  }
+
+  .head .img_2 {
+    position: relative;
+    left: 10rem;
+    /* padding-block: .5rem; */
+  }
+
+  .login .form {
+    padding-block: 1.5rem;
+  }
+
+  label {
+    display: block;
+    color: #e4e4e7;
+    padding-top: 0.5rem;
+  }
+  input {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    border-radius: 2.25rem;
+    margin-block: 0.5rem;
+    border: 1px solid #334155;
+    color: #94a3b8;
+  }
+
+  input[type="submit"] {
+    background-color: #facd66;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    padding: 0.625rem 1rem;
+    border-radius: 2.25rem;
+    margin-top: 4rem;
+  }
+
+  input[type="submit"]:hover {
+    opacity: 75%;
+  }
+
+  .login .form ul {
+    position: relative;
+    top: 6.8rem;
+    color: red;
+  }
+
+  .login .cta a {
+    color: #facd66;
+  }
+
+  .login .cta a:hover {
+    opacity: 75%;
+  }
+
+  @media (min-width: 760px) {
+    .login {
+      margin-left: 7rem;
+      padding: 3.13rem 5.75rem 6.25rem 8.69rem;
+    }
+
+    .head h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    .head p {
+      width: 45%;
+      margin-inline: auto;
+    }
+
+    .head .img_1 {
+      display: block;
+      position: relative;
+      top: 3.5rem;
+      left: 9rem;
+    }
+
+    .head .img_2 {
+      position: relative;
+      left: 63rem;
+      /* padding-block: .5rem; */
+    }
+
+    input {
+      display: block;
+      width: 75%;
+      margin-inline: auto;
+    }
+
+    label {
+      margin-left: 9rem;
+    }
+
+    .login .form ul {
+      margin-left: 9rem;
+      top: 6.9rem;
+    }
+
+    input[type="submit"] {
+      width: 40%;
+    }
+
+    .login .cta {
+      text-align: center;
+    }
+  }
 }

@@ -1,0 +1,24 @@
+{% load static %}
+
+<div class="login">
+  <div class="head">
+    <img class="img_1"  src="{% static 'assets/logo.png' %}" alt="" />
+    <h1>"Welcome Back to Your Music World 🎧</h1>
+    <p>
+      Sign in to reconnect with your favorite tracks, artists, and playlists.
+      Your music journey continues here!
+    </p>
+    <img class="img_2" src="{% static 'assets/logo.png' %}" alt="" />
+  </div>
+  <!-- {% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+  {% endif %} -->
+  <div class="form">
+    <form action="{% url 'login'  %}" method="post">
+      {{ form.as_p }} {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}" />
+      <input type="submit" value="Login" />
+    </form>
+  </div>
+  <p class="cta">Don’t have an account ?<a href="#"> Sign up</a></p>
+</div>
