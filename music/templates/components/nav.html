@@ -65,6 +65,7 @@
         </li>
       </ul>
       <ul class="nav-list mt-0 md:mt-5">
+      {% if request.user.is_authenticated %}
         <li>
           <a href="#" class="flex-nav">
             <svg class="nav-icon">
@@ -75,22 +76,40 @@
             <span class="nav-text">Profile</span>
           </a>
         </li>
+      {% endif %}
         <li>
-          <a href="" 
-          hx-target="#home"
-          hx-post="{% url 'login' %}"
-            class="flex-nav"
-            ><svg class="nav-icon">
-              <use
-                xlink:href="{% static 'assets/nav-icons.svg' %}#Logout"
-              ></use>
-            </svg>
-            <span class="nav-text">
-              {% if request.user.is_authenticated %} Log out {% else %} Login 
-              {% endif %}
-            </span>
-          </a>
+          {% if request.user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="flex-nav md:ml-[0.9rem]">
+                <svg class="nav-icon">
+                <use
+                  xlink:href="{% static 'assets/nav-icons.svg' %}#Logout"
+                ></use>
+              </svg>
+              <span class="nav-text">
+                {% if request.user.is_authenticated %} Log out {% else %} Login 
+                {% endif %}
+              </span>
+              </button>
+            </form>
+          {% else %}
+              <a href="{% url 'login' %}"
+              class="flex-nav"
+              ><svg class="nav-icon">
+                <use
+                  xlink:href="{% static 'assets/nav-icons.svg' %}#Logout"
+                ></use>
+              </svg>
+              <span class="nav-text">
+                {% if request.user.is_authenticated %} Log out {% else %} Login 
+                {% endif %}
+              </span>
+            </a>
+          {% endif %}
         </li>
+        
+          
       </ul>
     </div>
   </nav>

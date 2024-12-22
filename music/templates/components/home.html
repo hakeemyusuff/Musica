@@ -11,6 +11,9 @@
     >
       <div
         class="absolute inset-0 bg-black opacity-40 cursor-pointer rounded-[1.25rem]"
+        hx-trigger="click"
+        hx-target="#home"
+        hx-post="{% url 'album_songs' most_liked_album.id %}"
       ></div>
       <p class="relative text-[0.75rem]">Most liked album</p>
       <div class="mt-[14.75rem] md:mt-[5.31rem]">

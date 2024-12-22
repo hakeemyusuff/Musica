@@ -64,14 +64,13 @@
   }
 
   .login {
-    margin-top: 4.4rem;
+    margin-block: 3rem;
+    margin-inline: auto;
     background-color: #1d2123;
     border-radius: 2.5rem;
-    padding: 3.5rem 2rem 23rem;
+    padding: 3rem 1rem;
     font-size: 1rem;
-
-    /* width: 100%;
-    height: 100vh */
+    width: 95%;
   }
 
   .head {
@@ -115,8 +114,13 @@
     padding: 0.625rem 1rem;
     border-radius: 2.25rem;
     margin-block: 0.5rem;
-    border: 1px solid #334155;
+    border: 2px solid #334155;
     color: #94a3b8;
+  }
+
+  input:focus{
+    border-color: #facd66;
+    outline: none;
   }
 
   input[type="submit"] {
@@ -139,6 +143,11 @@
     color: red;
   }
 
+  .login .form a {
+    text-align: right;
+    margin-top: 1rem;
+  }
+
   .login .cta a {
     color: #facd66;
   }
@@ -147,10 +156,20 @@
     opacity: 75%;
   }
 
+  .reset-done p {
+    font-size: 5rem;
+    padding-block: 1rem;
+  }
+
   @media (min-width: 760px) {
     .login {
-      margin-left: 7rem;
-      padding: 3.13rem 5.75rem 6.25rem 8.69rem;
+      margin-inline: auto;
+      padding: 2rem 3rem;
+      width: 80%;
+    }
+
+    .login .form a {
+     margin-right: 10rem;
     }
 
     .head h1 {

@@ -972,14 +972,13 @@ html {
     grid-area: volume;
   }
 .login {
-    margin-top: 4.4rem;
+    margin-block: 3rem;
+    margin-inline: auto;
     background-color: #1d2123;
     border-radius: 2.5rem;
-    padding: 3.5rem 2rem 23rem;
+    padding: 3rem 1rem;
     font-size: 1rem;
-
-    /* width: 100%;
-    height: 100vh */
+    width: 95%;
   }
 .head {
     text-align: center;
@@ -1016,8 +1015,12 @@ input {
     padding: 0.625rem 1rem;
     border-radius: 2.25rem;
     margin-block: 0.5rem;
-    border: 1px solid #334155;
+    border: 2px solid #334155;
     color: #94a3b8;
+  }
+input:focus{
+    border-color: #facd66;
+    outline: none;
   }
 input[type="submit"] {
     background-color: #facd66;
@@ -1036,6 +1039,10 @@ input[type="submit"]:hover {
     top: 6.8rem;
     color: red;
   }
+.login .form a {
+    text-align: right;
+    margin-top: 1rem;
+  }
 .login .cta a {
     color: #facd66;
   }
@@ -1044,8 +1051,13 @@ input[type="submit"]:hover {
   }
 @media (min-width: 760px) {
     .login {
-      margin-left: 7rem;
-      padding: 3.13rem 5.75rem 6.25rem 8.69rem;
+      margin-inline: auto;
+      padding: 2rem 3rem;
+      width: 80%;
+    }
+
+    .login .form a {
+     margin-right: 10rem;
     }
 
     .head h1 {
@@ -1196,6 +1208,9 @@ input[type="submit"]:hover {
 .ml-0 {
   margin-left: 0px;
 }
+.ml-\[4rem\] {
+  margin-left: 4rem;
+}
 .mr-0 {
   margin-right: 0px;
 }
@@ -1204,6 +1219,9 @@ input[type="submit"]:hover {
 }
 .mt-0 {
   margin-top: 0px;
+}
+.mt-10 {
+  margin-top: 2.5rem;
 }
 .mt-11 {
   margin-top: 2.75rem;
@@ -1225,6 +1243,9 @@ input[type="submit"]:hover {
 }
 .mt-9 {
   margin-top: 2.25rem;
+}
+.mt-\[10rem\] {
+  margin-top: 10rem;
 }
 .mt-\[14\.75rem\] {
   margin-top: 14.75rem;
@@ -1318,6 +1339,9 @@ input[type="submit"]:hover {
 }
 .w-0 {
   width: 0px;
+}
+.w-1\/2 {
+  width: 50%;
 }
 .w-12 {
   width: 3rem;
@@ -1478,6 +1502,10 @@ input[type="submit"]:hover {
 .p-4 {
   padding: 1rem;
 }
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -1497,6 +1525,10 @@ input[type="submit"]:hover {
 .px-\[5rem\] {
   padding-left: 5rem;
   padding-right: 5rem;
+}
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 .py-2 {
   padding-top: 0.5rem;
@@ -1554,6 +1586,9 @@ input[type="submit"]:hover {
 .pt-\[2rem\] {
   padding-top: 2rem;
 }
+.text-center {
+  text-align: center;
+}
 .font-sans {
   font-family: quicksand, sans-serif;
 }
@@ -1565,6 +1600,9 @@ input[type="submit"]:hover {
 }
 .text-\[0\.875rem\] {
   font-size: 0.875rem;
+}
+.text-\[1\.2rem\] {
+  font-size: 1.2rem;
 }
 .text-\[1\.5rem\] {
   font-size: 1.5rem;
@@ -1607,6 +1645,10 @@ input[type="submit"]:hover {
   --tw-text-opacity: 1;
   color: rgb(164 199 198 / var(--tw-text-opacity));
 }
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
+}
 .text-gray-400 {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
@@ -1619,6 +1661,10 @@ input[type="submit"]:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
+.text-yellow-300 {
+  --tw-text-opacity: 1;
+  color: rgb(253 224 71 / var(--tw-text-opacity));
+}
 .opacity-20 {
   opacity: 0.2;
 }
@@ -1628,7 +1674,6 @@ input[type="submit"]:hover {
 .opacity-60 {
   opacity: 0.6;
 }
-
 @media (min-width: 768px) {
 
   .md\:grid-area {
@@ -1638,48 +1683,37 @@ input[type="submit"]:hover {
       "progress progress progress";
   }
 }
-
 .hover\:h-\[0\.85rem\]:hover {
   height: 0.85rem;
 }
-
 .hover\:h-\[1\.35rem\]:hover {
   height: 1.35rem;
 }
-
 .hover\:w-\[0\.85rem\]:hover {
   width: 0.85rem;
 }
-
 .hover\:w-\[1\.35rem\]:hover {
   width: 1.35rem;
 }
-
 .hover\:bg-yellow-400:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(250 204 21 / var(--tw-bg-opacity));
 }
-
 .hover\:fill-yellow-200:hover {
   fill: #fef08a;
 }
-
 .hover\:opacity-50:hover {
   opacity: 0.5;
 }
-
 .hover\:opacity-70:hover {
   opacity: 0.7;
 }
-
 .hover\:opacity-75:hover {
   opacity: 0.75;
 }
-
 .hover\:opacity-80:hover {
   opacity: 0.8;
 }
-
 @media (min-width: 768px) {
   .md\:left-\[2rem\] {
     left: 2rem;
@@ -1696,6 +1730,9 @@ input[type="submit"]:hover {
   }
   .md\:-mb-3 {
     margin-bottom: -0.75rem;
+  }
+  .md\:ml-\[0\.9rem\] {
+    margin-left: 0.9rem;
   }
   .md\:ml-\[5rem\] {
     margin-left: 5rem;
@@ -1786,6 +1823,9 @@ input[type="submit"]:hover {
   }
   .md\:pr-\[22\.81rem\] {
     padding-right: 22.81rem;
+  }
+  .md\:text-\[1\.5rem\] {
+    font-size: 1.5rem;
   }
   .md\:text-sm {
     font-size: 0.875rem;

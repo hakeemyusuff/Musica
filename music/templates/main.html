@@ -1,4 +1,5 @@
 {% load static %}
+{% load time_tags  %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,10 +16,20 @@
   </head>
   <body class="text-white font-sans" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' id="body">
     <header></header>
+    
+    {% if request.user.is_authenticated %}
+      <h1 class="ml-[4rem] mt-6 text-[1.2rem] md:ml-[7rem] font-bold md:text-[1.5rem] md:mt-5 fixed z-50 text-gray-200">Good {% time_of_day %}, {{ user.username }} </h1>
+    {% endif %}
+      
     <div class="container px-5 flex">{% include 'components/nav.html' %}</div>
-    <div class="container px-5" id="home">
+    <div class="container px-5 mt-10" id="home">
       {% include 'components/home.html' %}
     </div>
+    
+    {% block content %}
+      
+    {% endblock content %}
+      
     <audio class="audio-player hidden" controls>
       <source src="" type="audio/mp3" />
     </audio>
