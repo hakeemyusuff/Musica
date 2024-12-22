@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up Done</title>
+    <link rel="stylesheet" href="{% static 'css/main.min.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .complete {
+        margin-block: 10rem;
+        background-color: #1c2022;
+        color: white;
+        margin-inline: auto;
+        width: 50%;
+        border-radius: 2.5rem;
+        padding: 3rem 5rem;
+      }
+
+      .cta{
+        color: #FACD66;
+      }
+
+      .cta:hover{
+        opacity: 75%;
+      }
+
+      @media (max-width: 680px){
+        .complete{
+            width: 80%;
+            padding: 2rem 1rem;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="complete">
+        <h1 class="text-[1.5rem] font-bold">Welcome, {{ new_user.first_name }}!</h1>
+        <p class="text-[1.2rem] pt-3">
+        Your account has been successfully created.
+        Now you can <a class="cta" href="{% url 'login' %}">log in</a>.
+    </div>
+</p>
+</body>
+</html>

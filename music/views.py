@@ -1,6 +1,6 @@
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, render
-from music.forms import CustomPasswordResetForm
+from music.forms import CustomPasswordResetForm, UserRegistrationForm
 from .models import Album, Playlist, Song, SongLike, Collection
 from django.contrib.auth.views import PasswordResetView
 from django.db.models import Count, Sum
@@ -65,3 +65,17 @@ class CustomPasswordResetView(PasswordResetView):
     html_email_template_name = "registration/password_reset_email.html"
     from_email = "hakeemyusuff19@gmail.com"
     form_class = CustomPasswordResetForm
+
+
+def register(request):
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False)
+            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.save()
+            return render(request, "components/register_done.html", {'new_user': new_user})
+    else:
+        user_form = UserRegistrationForm()
+    return render(request, 'components/register.html', {'user_form': user_form})
+    
