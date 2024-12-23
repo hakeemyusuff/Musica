@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from music.forms import CustomPasswordResetForm, UserRegistrationForm
 from .models import Album, Playlist, Song, SongLike, Collection
 from django.contrib.auth.views import PasswordResetView

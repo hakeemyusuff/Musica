@@ -41,5 +41,5 @@ urlpatterns = [
         name="password_reset_complete",
     ),
   
-    path("sign-up/", views.register, name="sign-up")
+    path("sign-up/", views.register, name="sign-up"),
 ]

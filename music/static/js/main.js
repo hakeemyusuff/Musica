@@ -1,36 +1,45 @@
-let playBtn = document.querySelector(".play");
-let pauseBtn = document.querySelector(".pause");
-let nextBtn = document.querySelector(".next");
-let prevBtn = document.querySelector(".prev");
-let playPause = document.querySelector(".pause-play");
-let audioPlayer = document.querySelector(".audio-player");
-let volumeBar = document.querySelector(".volume-bar");
-let VolumeFill = document.querySelector(".volume-fill");
-let progressBar = document.querySelector(".progress-bar");
-let progressFill = document.querySelector(".progress-fill");
-let progressPin = document.querySelector(".progress-pin");
-const navOpen = document.querySelector(".nav-open");
-const navClose = document.querySelector(".nav-close");
-const navMenu = document.querySelector(".nav-menu");
-const navControl = document.querySelector(".nav-control");
-let songs = document.querySelectorAll(".song");
-let songUrl = document.querySelector(".song-url");
+// Query selectors consolidated at top
+const elements = {
+  playBtn: document.querySelector(".play"),
+  pauseBtn: document.querySelector(".pause"),
+  nextBtn: document.querySelector(".next"),
+  prevBtn: document.querySelector(".prev"),
+  playPause: document.querySelector(".pause-play"),
+  audioPlayer: document.querySelector(".audio-player"),
+  volumeBar: document.querySelector(".volume-bar"),
+  volumeFill: document.querySelector(".volume-fill"),
+  progressBar: document.querySelector(".progress-bar"),
+  progressFill: document.querySelector(".progress-fill"),
+  progressPin: document.querySelector(".progress-pin"),
+  navOpen: document.querySelector(".nav-open"),
+  navClose: document.querySelector(".nav-close"),
+  navMenu: document.querySelector(".nav-menu"),
+  navControl: document.querySelector(".nav-control"),
+};
 
-navControl.addEventListener("click", () => {
-  if (navMenu.classList.contains("hidden")) {
-    navMenu.classList.remove("hidden");
-    // navMenu.classList.add("scale-50")
-    navClose.classList.remove("hidden");
-    navOpen.classList.add("hidden");
-  } else {
-    navMenu.classList.add("hidden");
-    navClose.classList.add("hidden");
-    navOpen.classList.remove("hidden");
-  }
+// State management
+const state = {
+  isDragging: false,
+  currentPlaylist: {
+    songs: [],
+    currentIndex: 0,
+  },
+};
+
+// Navigation menu toggle
+elements.navControl.addEventListener("click", () => {
+  const { navMenu, navClose, navOpen } = elements;
+  const isHidden = navMenu.classList.contains("hidden");
+
+  navMenu.classList.toggle("hidden", !isHidden);
+  navClose.classList.toggle("hidden", !isHidden);
+  navOpen.classList.toggle("hidden", isHidden);
 });
 
-//Controls the playing and pausing of the player
-playPause.addEventListener("click", () => {
+// Play/Pause functionality
+elements.playPause.addEventListener("click", () => {
+  const { audioPlayer, playBtn, pauseBtn } = elements;
+
   if (audioPlayer.paused) {
     audioPlayer.play();
     playBtn.classList.add("hidden");
@@ -42,270 +51,144 @@ playPause.addEventListener("click", () => {
   }
 });
 
-//This section allow the user to set volume
-// volumeBar.addEventListener("click", (e) => {
-//   const barWidth = volumeBar.clientWidth;
-//   const clickPosition = e.offsetX;
-//   const newVolume = clickPosition / barWidth;
-//   VolumeFill.style.width = `${newVolume * 100}%`;
-//   audioPlayer.volume = newVolume;
-// });
+// Volume control
+function updateVolume(e) {
+  if (!state.isDragging) return;
 
-// This set the volume to always be at 50%
-VolumeFill.style.width = "50%";
-audioPlayer.volume = 0.5;
+  const { volumeBar, volumeFill, audioPlayer } = elements;
+  const barWidth = volumeBar.clientWidth;
+  const newVolume = Math.min(Math.max(e.offsetX / barWidth, 0), 1);
 
-let isDragging = false;
-
-function addListeners(events, element, listener) {
-  events.forEach((event) => {
-    element.addEventListener(event, listener);
-  });
+  volumeFill.style.width = `${newVolume * 100}%`;
+  audioPlayer.volume = newVolume;
 }
 
-const updateVolume = (e) => {
-  if (isDragging) {
-    const barWidth = volumeBar.clientWidth;
-    const newVolume = Math.min(Math.max(e.offsetX / barWidth, 0), 1);
-    VolumeFill.style.width = `${newVolume * 100}%`;
-    audioPlayer.volume = newVolume;
-  }
-};
-
-volumeBar.addEventListener("mousedown", (e) => {
-  isDragging = true;
+elements.volumeBar.addEventListener("mousedown", (e) => {
+  state.isDragging = true;
   updateVolume(e);
 });
 
-addListeners(["mouseup", "mouseleave"], volumeBar, () => {
-  isDragging = false;
+["mouseup", "mouseleave"].forEach((event) => {
+  elements.volumeBar.addEventListener(event, () => {
+    state.isDragging = false;
+  });
 });
 
-volumeBar.addEventListener("mousemove", (e) => {
-  if (isDragging) {
-    updateVolume(e);
-  }
-});
+elements.volumeBar.addEventListener("mousemove", updateVolume);
 
-audioPlayer.addEventListener("timeupdate", () => {
-  const currentTime = audioPlayer.currentTime;
-  const duration = audioPlayer.duration;
-  const progressPercent = (currentTime / duration) * 100;
+// Progress bar update
+elements.audioPlayer.addEventListener("timeupdate", () => {
+  const { audioPlayer, progressFill, progressPin } = elements;
+  const progressPercent =
+    (audioPlayer.currentTime / audioPlayer.duration) * 100;
 
   progressFill.style.width = `${progressPercent}%`;
   progressPin.style.left = `${progressPercent}%`;
 });
 
-progressPin.addEventListener("click", () => {
-  isDragging = true;
+// Progress pin drag functionality
+elements.progressPin.addEventListener("mousedown", () => {
+  state.isDragging = true;
 });
 
-addListeners(["mouseup", "mouseleave"], progressPin, () => {
-  isDragging = false;
+["mouseup", "mouseleave"].forEach((event) => {
+  elements.progressPin.addEventListener(event, () => {
+    state.isDragging = false;
+  });
 });
-// progressPin.addEventListener("mouseup", () => {
-//   isDragging = false;
-// });
 
-addListeners(["mousemove"], progressPin, (e) => {
-  if (isDragging) {
-    const barWidth = progressBar.clientWidth;
-    const dragX = e.clientX - progressBar.getBoundingClientRect().left;
-    const newTime = (dragX / barWidth) * audioPlayer.duration;
+elements.progressPin.addEventListener("mousemove", (e) => {
+  if (!state.isDragging) return;
 
-    if (newTime >= 0 && newTime <= audioPlayer.duration) {
-      audioPlayer.currentTime = newTime;
-      const progressPercent =
-        (audioPlayer.currentTime / audioPlayer.duration) * 100;
+  const { progressBar, audioPlayer, progressFill, progressPin } = elements;
+  const barWidth = progressBar.clientWidth;
+  const dragX = e.clientX - progressBar.getBoundingClientRect().left;
+  const newTime = (dragX / barWidth) * audioPlayer.duration;
 
-      progressFill.style.width = `${progressPercent}%`;
-      progressPin.style.left = `${progressPercent}%`;
-    }
+  if (newTime >= 0 && newTime <= audioPlayer.duration) {
+    audioPlayer.currentTime = newTime;
+    const progressPercent = (newTime / audioPlayer.duration) * 100;
+
+    progressFill.style.width = `${progressPercent}%`;
+    progressPin.style.left = `${progressPercent}%`;
   }
 });
 
-// progressPin.addEventListener("mousemove", (e) => {
-//   const barWidth = progressBar.clientWidth;
-//   const dragX = e.clientX - progressBar.getBoundingClientRect().left;
-//   const newTime = (dragX / barWidth) * audioPlayer.duration;
+// Song management
+function playSong(song) {
+  const { audioPlayer, playBtn, pauseBtn } = elements;
+  const songUrl = song.getAttribute("data-url");
+  const songName = song.getAttribute("data-song-name");
+  const songCover = song.getAttribute("data-image");
+  const songArtist = song.getAttribute("data-artist");
 
-//   if (newTime >= 0 && newTime <= audioPlayer.duration) {
-//     audioPlayer.currentTime = newTime;
-//     const progressPercent =
-//       (audioPlayer.currentTime / audioPlayer.duration) * 100;
+  audioPlayer.innerHTML = `<source src="/media/${songUrl}" type="audio/mpeg">`;
+  audioPlayer.load();
 
-//     progressFill.style.width = `${progressPercent}%`;
-//     progressPin.style.left = `${progressPercent}%`;
-//   }
-// });
+  document.querySelector(".song-name").textContent = songName;
+  document.querySelector(".song-artist").textContent = songArtist;
+  document.querySelector(".player-image").src = `/media/${songCover}`;
 
-// const url = "http://127.0.0.1:8000/music/songs";
-// async function getSongsData(url) {
-//   const response = await fetch(url)
-//   const data = await response.json()
-//   let songs = data
-// }
+  audioPlayer.play();
+  playBtn.classList.add("hidden");
+  pauseBtn.classList.remove("hidden");
+}
 
-// getSongsData(url)
-// function PlaySong(song) {
-//   const songUrl = song.getAttribute("data-url");
-//   const songName = song.getAttribute("data-song-name");
-//   const songCover = song.getAttribute("data-image");
-//   const songArtist = song.getAttribute("data-artist");
+function playNextSong() {
+  const { songs, currentIndex } = state.currentPlaylist;
+  if (!songs.length) return;
 
-//   audioPlayer.innerHTML = "";
-//   audioPlayer.innerHTML = `<source src='../../media/${songUrl}' type='audio/mpeg'>`;
-//   audioPlayer.load();
+  state.currentPlaylist.currentIndex = (currentIndex + 1) % songs.length;
+  playSong(songs[state.currentPlaylist.currentIndex]);
+}
 
-//   document.querySelector(".song-name").innerText = songName;
-//   document.querySelector(".song-artist").innerText = songArtist;
-//   document.querySelector(".player-image").src = `../../media/${songCover}`;
+function playPrevSong() {
+  const { songs, currentIndex } = state.currentPlaylist;
+  if (!songs.length) return;
 
-//   audioPlayer.play();
-//   playBtn.classList.add("hidden");
-//   pauseBtn.classList.remove("hidden");
-// }
-
-// let currentPlaylist = {
-//   songs: [],
-//   currentIndex: 0,
-// };
-
-// for (let song of songs) {
-//   song.addEventListener("click", () => {
-//     const playListSongs = Array.from(songs);
-//     const clickedSongIndex = playListSongs.indexOf(song);
-
-//     currentPlaylist = {
-//       songs: playListSongs,
-//       currentIndex: clickedSongIndex,
-//     };
-//     PlaySong(song);
-//   });
-// }
-
-// playNextSong = () => {
-//   if (currentPlaylist.songs.length === 0) return;
-
-//   currentPlaylist.currentIndex =
-//     (currentPlaylist.currentIndex + 1) % currentPlaylist.songs.length;
-//   const nextSong = currentPlaylist.songs[currentPlaylist.currentIndex];
-//   PlaySong(nextSong);
-// };
-
-// nextBtn.addEventListener("click", () => {
-//   playNextSong();
-// });
-
-// prevBtn.addEventListener("click", () => {
-//   if (currentPlaylist.songs.length === 0) return;
-
-//   currentPlaylist.currentIndex =
-//     (currentPlaylist.currentIndex - 1 + currentPlaylist.songs.length) %
-//     currentPlaylist.songs.length;
-//   const prevSong = currentPlaylist.songs[currentPlaylist.currentIndex];
-//   PlaySong(prevSong);
-// });
-// audioPlayer.addEventListener("ended", () => {
-//   playNextSong();
-// });
-
-
-
-
-// document.body.addEventListener("htmx:afterOnLoad", setupSongListeners);
+  state.currentPlaylist.currentIndex =
+    (currentIndex - 1 + songs.length) % songs.length;
+  playSong(songs[state.currentPlaylist.currentIndex]);
+}
 
 function setupSongListeners() {
-  let songs = document.querySelectorAll(".song");
-  let audioPlayer = document.querySelector(".audio-player");
-  let playBtn = document.querySelector(".play");
-  let pauseBtn = document.querySelector(".pause");
-  let nextBtn = document.querySelector(".next");
-  let prevBtn = document.querySelector(".prev");
+  const songs = document.querySelectorAll(".song");
 
-  let currentPlaylist = {
-    songs: [],
-    currentIndex: 0,
-  };
-
-  function PlaySong(song) {
-    const songUrl = song.getAttribute("data-url");
-    const songName = song.getAttribute("data-song-name");
-    const songCover = song.getAttribute("data-image");
-    const songArtist = song.getAttribute("data-artist");
-
-    audioPlayer.innerHTML = "";
-    audioPlayer.innerHTML = `<source src='../../media/${songUrl}' type='audio/mpeg'>`;
-    audioPlayer.load();
-
-    document.querySelector(".song-name").innerText = songName;
-    document.querySelector(".song-artist").innerText = songArtist;
-    document.querySelector(".player-image").src = `../../media/${songCover}`;
-
-    audioPlayer.play();
-    playBtn.classList.add("hidden");
-    pauseBtn.classList.remove("hidden");
-  }
-
-  function playNextSong() {
-    if (currentPlaylist.songs.length === 0) return;
-
-    currentPlaylist.currentIndex =
-      (currentPlaylist.currentIndex + 1) % currentPlaylist.songs.length;
-    const nextSong = currentPlaylist.songs[currentPlaylist.currentIndex];
-    PlaySong(nextSong);
-  }
-
-  function playPrevSong() {
-    if (currentPlaylist.songs.length === 0) return;
-
-    currentPlaylist.currentIndex =
-      (currentPlaylist.currentIndex - 1 + currentPlaylist.songs.length) %
-      currentPlaylist.songs.length;
-    const prevSong = currentPlaylist.songs[currentPlaylist.currentIndex];
-    PlaySong(prevSong);
-  }
-
-  // Remove existing event listeners to prevent duplicates
-  songs.forEach((song) => {
-    song.removeEventListener("click", songClickHandler);
-  });
-
-  // Song click handler
   function songClickHandler() {
-    const playListSongs = Array.from(songs);
-    const clickedSongIndex = playListSongs.indexOf(this);
+    const playlistSongs = Array.from(songs);
+    const clickedSongIndex = playlistSongs.indexOf(this);
 
-    currentPlaylist = {
-      songs: playListSongs,
+    state.currentPlaylist = {
+      songs: playlistSongs,
       currentIndex: clickedSongIndex,
     };
-    PlaySong(this);
+    playSong(this);
   }
 
-  // Add click listeners to songs
+  // Remove existing and add new listeners
   songs.forEach((song) => {
+    song.removeEventListener("click", songClickHandler);
     song.addEventListener("click", songClickHandler);
   });
 
-  // Remove existing event listeners on next and prev buttons
-  if (nextBtn) {
-    nextBtn.removeEventListener("click", playNextSong);
-    nextBtn.addEventListener("click", playNextSong);
+  if (elements.nextBtn) {
+    elements.nextBtn.removeEventListener("click", playNextSong);
+    elements.nextBtn.addEventListener("click", playNextSong);
   }
 
-  if (prevBtn) {
-    prevBtn.removeEventListener("click", playPrevSong);
-    prevBtn.addEventListener("click", playPrevSong);
+  if (elements.prevBtn) {
+    elements.prevBtn.removeEventListener("click", playPrevSong);
+    elements.prevBtn.addEventListener("click", playPrevSong);
   }
 
-  // Auto-play next song when current song ends
-  audioPlayer.removeEventListener("ended", playNextSong);
-  audioPlayer.addEventListener("ended", playNextSong);
+  elements.audioPlayer.removeEventListener("ended", playNextSong);
+  elements.audioPlayer.addEventListener("ended", playNextSong);
 }
 
-// Initial setup
+// Initialize
 document.addEventListener("DOMContentLoaded", setupSongListeners);
-
-// HTMX-specific event to re-run setup after dynamic content load
 document.body.addEventListener("htmx:afterOnLoad", setupSongListeners);
+
+// Set initial volume
+elements.volumeFill.style.width = "50%";
+elements.audioPlayer.volume = 0.5;

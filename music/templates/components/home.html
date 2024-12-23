@@ -3,14 +3,14 @@
 <div class="md:ml-[7rem] mt-[5rem] md:mt-2">
   <div class="md:grid grid-cols-3 gap-6 relative h-fit">
     <div
-      class="relative text-white mt-7 rounded-[1.25rem] px-8 py-8 md:pr-[22.81rem] col-span-2"
+      class="relative text-white mt-7 rounded-[1.25rem] px-8 py-8 md:pr-[22.81rem] col-span-2 hover:opacity-75"
       style="background-image: url('/media/{{ most_liked_album.album_cover }}'); background-size: cover; background-position: center;"
       hx-target="#home"
       hx-trigger="click"
 
     >
       <div
-        class="absolute inset-0 bg-black opacity-40 cursor-pointer rounded-[1.25rem]"
+        class="absolute inset-0 bg-black opacity-40 cursor-pointer rounded-[1.25rem] "
         hx-trigger="click"
         hx-target="#home"
         hx-post="{% url 'album_songs' most_liked_album.id %}"
@@ -42,7 +42,7 @@
         <div class="cursor-pointer">
           {% for album in liked_albums %}
           <div
-            class="bg-primary flex items-start justify-between rounded-2xl mt-3"
+            class="bg-primary flex items-start justify-between rounded-2xl mt-3 shadow-xl transition duration-300 hover:scale-105"
             hx-trigger="click"
             hx-target="#home"
             hx-post="{% url 'album_songs' album.id %}"
@@ -75,7 +75,7 @@
     >
       {% for album in liked_albums %}
       <div
-        class="carousel-item bg-primary flex items-start rounded-2xl cursor-pointer"
+        class="carousel-item bg-primary flex items-start rounded-2xl cursor-pointer shadow-xl transition duration-300 hover:scale-105"
         hx-trigger="click"
         hx-target="#home"
         hx-post="{% url 'album_songs' album.id %}"
@@ -107,7 +107,7 @@
     >
       {% for song in songs %}
       <div
-        class="carousel-item rounded-2xl cursor-pointer song"
+        class="carousel-item rounded-2xl cursor-pointer song shadow-xl transition duration-300 hover:scale-105"
         data-url="{{ song.song_url }}"
         data-image="{{ song.cover_image }}"
         data-song-name="{{ song.song_name }}"
