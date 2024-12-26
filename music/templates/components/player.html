@@ -5,20 +5,20 @@
   <div class="song-details flex space-x-4">
     <img
       class="w-14 h-14 md:h-12 md:w-12 rounded-xl player-image"
-      src="../../media/{{songs.cover_image}}"
+      src="{{ song.cover_image.url }}"
       alt=""
     />
     <div class="details">
-      <h2 class="song-name text-lg md:text-sm font-bold">{{ songs.song_name }}</h2>
-      <p class="song-artist text-gray-400 text-sm">{{ songs.artist }}</p>
+      <h2 class="song-name text-lg md:text-sm font-bold">{{ song.song_name }}</h2>
+      <p class="song-artist text-gray-400 text-sm">{{ song.artist }}</p>
     </div>
   </div>
   <div class="controls flex justify-center md:space-x-10 space-x-5 h-fit mt-5">
     <svg class="control-icon hide">
-      <use xlink:href="{% static 'assets/controls.svg' %}#shuffle"></use>
+      <use xlink:href="#shuffle"></use>
     </svg>
     <svg class="control-icon hide prev">
-      <use xlink:href="{% static 'assets/controls.svg' %}#previous"></use>
+      <use xlink:href="#previous"></use>
     </svg>
     <div class="pause-play hover:opacity-80 cursor-pointer">
       <img
@@ -33,9 +33,9 @@
       />
     </div>
     <svg class="control-icon next">
-      <use xlink:href="{% static 'assets/controls.svg' %}#next"></use></svg
+      <use xlink:href="#next"></use></svg
     ><svg class="control-icon hide">
-      <use xlink:href="{% static 'assets/controls.svg' %}#repeate-one"></use>
+      <use xlink:href="#repeate-one"></use>
     </svg>
   </div>
     <div
@@ -50,7 +50,7 @@
         <svg
           class="w-5 h-5 hover:w-[1.35rem] hover:h-[1.35rem] fill-transparent stroke-white absolute -bottom-1 -left-1"
         >
-          <use xlink:href="{% static 'assets/controls.svg' %}#Ellipse 8"></use>
+          <use xlink:href="#Ellipse 8"></use>
         </svg>
       </div>
     </div>

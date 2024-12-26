@@ -42,4 +42,5 @@ urlpatterns = [
     ),
   
     path("sign-up/", views.register, name="sign-up"),
+    path("add-collection/<int:id>", views.add_to_collection, name="add_to_collection"),
 ]

@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./music/templates/*.html", "./music/templates/components/*.html"],
+  content: [
+    "./music/templates/*.html",
+    "./music/templates/components/*.html",
+    "./music/templates/components/registration/*.html",
+  ],
   theme: {
     extend: {
       backgroundImage: {

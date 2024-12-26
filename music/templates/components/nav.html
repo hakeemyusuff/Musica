@@ -30,11 +30,12 @@
             class="nav-link flex-nav"
             hx-post="{% url 'media' %}"
             hx-target="#body"
+            hx-push-url="{% url 'media' %}"
           >
             <svg
               class="icon w-12 h-12 md:m-auto -ml-3 -mb-2 md:-mb-3 fill-gray-100 hover:fill-yellow-200 {% if section == 'home' %} active-nav {% endif %}"
             >
-              <use xlink:href="{% static 'assets/nav-icons.svg' %}#Home"></use>
+              <use xlink:href="#Home"></use>
             </svg>
             <span class="nav-text relative -bottom-3 -left-2">Home</span>
           </a>
@@ -44,10 +45,11 @@
             href=""
             hx-post="{% url 'collection' %}"
             hx-target="#home"
+            hx-push-url="{% url 'collection' %}"
           >
             <svg class="nav-icon {% if section == 'collection' %} active-nav {% endif %}">
               <use
-                xlink:href="{% static 'assets/nav-icons.svg' %}#playlist"
+                xlink:href="#playlist"
               ></use>
             </svg>
             <span class="nav-text">collections</span>
@@ -57,7 +59,7 @@
           <a href="#" class="nav-link flex-nav">
             <svg class="nav-icon">
               <use
-                xlink:href="{% static 'assets/nav-icons.svg' %}#videos"
+                xlink:href="#videos"
               ></use>
             </svg>
             <span class="nav-text">Videos</span>
@@ -70,7 +72,7 @@
           <a href="#" class="flex-nav">
             <svg class="nav-icon">
               <use
-                xlink:href="{% static 'assets/nav-icons.svg' %}#profile"
+                xlink:href="#profile"
               ></use>
             </svg>
             <span class="nav-text">Profile</span>
@@ -84,7 +86,7 @@
               <button type="submit" class="flex-nav md:ml-[0.9rem]">
                 <svg class="nav-icon">
                 <use
-                  xlink:href="{% static 'assets/nav-icons.svg' %}#Logout"
+                  xlink:href="#Logout"
                 ></use>
               </svg>
               <span class="nav-text">
@@ -98,7 +100,7 @@
               class="flex-nav"
               ><svg class="nav-icon">
                 <use
-                  xlink:href="{% static 'assets/nav-icons.svg' %}#Logout"
+                  xlink:href="#Logout"
                 ></use>
               </svg>
               <span class="nav-text">

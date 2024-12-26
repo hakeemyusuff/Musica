@@ -4,16 +4,14 @@
   <div class="md:grid grid-cols-3 gap-6 relative h-fit">
     <div
       class="relative text-white mt-7 rounded-[1.25rem] px-8 py-8 md:pr-[22.81rem] col-span-2 hover:opacity-75"
-      style="background-image: url('/media/{{ most_liked_album.album_cover }}'); background-size: cover; background-position: center;"
-      hx-target="#home"
-      hx-trigger="click"
-
+      style="background-image: url('{{ most_liked_album.album_cover.url }}'); background-size: cover; background-position: center;"
     >
       <div
         class="absolute inset-0 bg-black opacity-40 cursor-pointer rounded-[1.25rem] "
         hx-trigger="click"
         hx-target="#home"
         hx-post="{% url 'album_songs' most_liked_album.id %}"
+        hx-push-url="{% url 'album_songs' most_liked_album.id %}"
       ></div>
       <p class="relative text-[0.75rem]">Most liked album</p>
       <div class="mt-[14.75rem] md:mt-[5.31rem]">
@@ -46,11 +44,12 @@
             hx-trigger="click"
             hx-target="#home"
             hx-post="{% url 'album_songs' album.id %}"
+            hx-push-url="{% url 'album_songs' album.id %}"
           >
             <div class="flex items-start">
               <img
                 class="size-[6rem] rounded-[0.625rem]"
-                src="../../../media/{{ album.album_cover }}"
+                src="{{ album.album_cover.url }}"
                 alt=""
               />
               <div class="pl-4">
@@ -79,11 +78,12 @@
         hx-trigger="click"
         hx-target="#home"
         hx-post="{% url 'album_songs' album.id %}"
+        hx-push-url="{% url 'album_songs' album.id %}"
       >
         <div class="pr-[11rem] pl-4 py-4">
           <img
             class="size-[6rem] rounded-[0.625rem]"
-            src="../../../media/{{ album.album_cover }}"
+            src="{{ album.album_cover.url }}"
             alt=""
           />
           <h2 class="text-base py-2">{{ album.title }}</h2>
@@ -108,15 +108,15 @@
       {% for song in songs %}
       <div
         class="carousel-item rounded-2xl cursor-pointer song shadow-xl transition duration-300 hover:scale-105"
-        data-url="{{ song.song_url }}"
-        data-image="{{ song.cover_image }}"
+        data-url="{{ song.song_url.url }}"
+        data-image="{{ song.cover_image.url }}"
         data-song-name="{{ song.song_name }}"
         data-artist="{{ song.artist }}"
       >
         <div class="">
           <img
             class="size-[8rem] md:size-[12rem] rounded-[0.625rem]"
-            src="../../../media/{{ song.cover_image }}"
+            src="{{ song.cover_image.url }}"
             alt=""
           />
           <h2 class="text-base py-2">{{ song.song_name }}</h2>

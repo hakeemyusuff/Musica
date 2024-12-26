@@ -3,13 +3,13 @@
 <div class="bg-pimary">
   <div
     class="relative w-full md:w-[95%] h-[27rem] mr-0 md:ml-[5rem] text-white"
-    style="background-image: url('../../../media/{{ album.album_cover }}'); background-size: cover; background-position: center;"
+    style="background-image: url('{{ album.album_cover.url }}'); background-size: cover; background-position: center;"
   >
     <div class="absolute inset-0 bg-black opacity-60 cursor-pointer"></div>
-    <div class="md:flex items-end space-x-4 p-4 relative">
+    <div class="md:flex items-end space-x-4 p-4 relative md:mb-[5rem]">
       <img
         class="w-[22rem] md:w-[18rem] h-auto rounded-3xl object-cover mt-[4rem]"
-        src="../../../media/{{ album.album_cover }}"
+        src="{{ album.album_cover.url }}"
         alt="album cover"
       />
       <div class="ml-0 text-[0.875rem]">
@@ -21,7 +21,7 @@
           {{ songs | length}} songs ~ {{ album_duration|floatformat:"2" }} hrs
         </p>
         <div class="flex justify-between pt-5">
-          <div class="album-control">
+          <div class="album-control hover:opacity-75">
             <img
               class="size-6"
               src="{% static 'assets/Play-yellow.png' %}"
@@ -29,22 +29,24 @@
             />
             <span>Play all</span>
           </div>
-          <!-- <div class="album-control">
+          <div class="album-control cursor-pointer hover:opacity-75" 
+            hx-post="{% url 'add_to_collection' album.id %}"
+            hx-target="#home">
             <img
               class="size-4"
               src="{% static 'assets/music-square-add.png' %}"
               alt=""
             />
             <span>Add to collection</span>
-          </div> -->
-          <div class="album-control">
+          </div>
+          <!-- <div class="album-control">
             <img
               class="size-6"
               src="{% static 'assets/Heart-red.png' %}"
               alt=""
             />
             <span>Like</span>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>  
@@ -52,15 +54,15 @@
       {% for song in songs %}
       <div
         class="song bg-primary flex cursor-pointer my-2 py-4 px-3 rounded-xl justify-between hover:opacity-75"
-        data-url="{{ song.song_url }}"
-        data-image="{{ song.cover_image }}"
+        data-url="{{ song.song_url.url }}"
+        data-image="{{ song.cover_image.url }}"
         data-song-name="{{ song.song_name }}"
         data-artist="{{ song.artist }}"
       >
         <div class="flex">
           <img
             class="size-12 rounded-sm"
-            src="../../../media/{{ song.cover_image }}"
+            src="{{ song.cover_image.url }}"
             alt=""
           />
           <h2 class="pl-[1rem]">{{ song.song_name }} ~ {{ song.artist }}</h2>

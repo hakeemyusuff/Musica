@@ -28,15 +28,15 @@
       {% for song in liked_songs %}
       <div
         class="song bg-primary flex cursor-pointer my-2 py-4 px-3 rounded-xl justify-between hover:opacity-75 w-full"
-        data-url="{{ song.song_url }}"
-        data-image="{{ song.cover_image }}"
+        data-url="{{ song.song_url.url }}"
+        data-image="{{ song.cover_image.url }}"
         data-song-name="{{ song.song_name }}"
         data-artist="{{ song.artist }}"
       >
         <div class="flex">
           <img
             class="size-12 rounded-sm"
-            src="../../../media/{{ song.cover_image }}"
+            src="{{ song.cover_image.url }}"
             alt=""
           />
           <h2 class="pl-[1rem]">{{ song.song_name }} ~ {{ song.artist }}</h2>

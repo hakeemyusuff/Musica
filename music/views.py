@@ -1,12 +1,9 @@
-from django.urls import reverse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 from music.forms import CustomPasswordResetForm, UserRegistrationForm
-from .models import Album, Playlist, Song, SongLike, Collection
+from .models import Album, Song, Collection
 from django.contrib.auth.views import PasswordResetView
 from django.db.models import Count, Sum
 from django.contrib.auth.decorators import login_required
-from django.utils.http import urlencode
-
 
 def list_media(request):
     songs = Song.objects.all()
@@ -78,4 +75,9 @@ def register(request):
     else:
         user_form = UserRegistrationForm()
     return render(request, 'components/register.html', {'user_form': user_form})
+    
+def add_to_collection(request, id):
+    album = get_object_or_404(Album, pk=id)
+    Collection.objects.get_or_create(user=request.user, album=album)
+    return render(request, "components/collection-page.html")
     

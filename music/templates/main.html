@@ -15,8 +15,10 @@
     />
   </head>
   <body class="text-white font-sans" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' id="body">
-    <header></header>
-    
+    <svg class="hidden" width="0" height="0">
+      {% include 'nav-icons.svg' %}
+      {% include 'controls.svg' %}
+    </svg>    
     {% if request.user.is_authenticated %}
       <h1 class="ml-[4rem] mt-6 text-[1.2rem] md:ml-[7rem] font-bold md:text-[1.5rem] md:mt-5 fixed z-50 text-gray-200">Good {% time_of_day %}, {{ user.username }} </h1>
     {% endif %}

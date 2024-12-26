@@ -122,12 +122,12 @@ function playSong(song) {
   const songCover = song.getAttribute("data-image");
   const songArtist = song.getAttribute("data-artist");
 
-  audioPlayer.innerHTML = `<source src="/media/${songUrl}" type="audio/mpeg">`;
+  audioPlayer.innerHTML = `<source src="${songUrl}" type="audio/mpeg">`;
   audioPlayer.load();
 
   document.querySelector(".song-name").textContent = songName;
   document.querySelector(".song-artist").textContent = songArtist;
-  document.querySelector(".player-image").src = `/media/${songCover}`;
+  document.querySelector(".player-image").src = `${songCover}`;
 
   audioPlayer.play();
   playBtn.classList.add("hidden");
