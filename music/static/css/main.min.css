@@ -667,16 +667,6 @@ html {
     --tw-text-opacity: 1;
     color: var(--fallback-nc,oklch(var(--nc)/var(--tw-text-opacity)));
   }
-  .table tr.hover:hover,
-  .table tr.hover:nth-child(even):hover {
-    --tw-bg-opacity: 1;
-    background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
-  }
-  .table-zebra tr.hover:hover,
-  .table-zebra tr.hover:nth-child(even):hover {
-    --tw-bg-opacity: 1;
-    background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity)));
-  }
 }
 .carousel {
   display: inline-flex;
@@ -1181,7 +1171,7 @@ input[type="submit"]:hover {
   }
 .login .form ul {
     position: relative;
-    top: 6.8rem;
+    top: 0;
     color: red;
   }
 .login .form a {
@@ -1240,7 +1230,7 @@ input[type="submit"]:hover {
 
     .login .form ul {
       margin-left: 9rem;
-      top: 6.9rem;
+      top: 0;
     }
 
     input[type="submit"] {
@@ -1840,7 +1830,6 @@ input[type="submit"]:hover {
 .duration-300 {
   transition-duration: 300ms;
 }
-
 @media (min-width: 768px) {
 
   .md\:grid-area {
@@ -1850,54 +1839,42 @@ input[type="submit"]:hover {
       "progress progress progress";
   }
 }
-
 .hover\:h-\[0\.85rem\]:hover {
   height: 0.85rem;
 }
-
 .hover\:h-\[1\.35rem\]:hover {
   height: 1.35rem;
 }
-
 .hover\:w-\[0\.85rem\]:hover {
   width: 0.85rem;
 }
-
 .hover\:w-\[1\.35rem\]:hover {
   width: 1.35rem;
 }
-
 .hover\:scale-105:hover {
   --tw-scale-x: 1.05;
   --tw-scale-y: 1.05;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .hover\:bg-yellow-400:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(250 204 21 / var(--tw-bg-opacity));
 }
-
 .hover\:fill-yellow-200:hover {
   fill: #fef08a;
 }
-
 .hover\:opacity-50:hover {
   opacity: 0.5;
 }
-
 .hover\:opacity-70:hover {
   opacity: 0.7;
 }
-
 .hover\:opacity-75:hover {
   opacity: 0.75;
 }
-
 .hover\:opacity-80:hover {
   opacity: 0.8;
 }
-
 @media (min-width: 768px) {
   .md\:left-\[2rem\] {
     left: 2rem;
@@ -1914,6 +1891,9 @@ input[type="submit"]:hover {
   }
   .md\:-mb-3 {
     margin-bottom: -0.75rem;
+  }
+  .md\:mb-\[5rem\] {
+    margin-bottom: 5rem;
   }
   .md\:ml-\[0\.9rem\] {
     margin-left: 0.9rem;
@@ -1947,9 +1927,6 @@ input[type="submit"]:hover {
   }
   .md\:mt-\[5rem\] {
     margin-top: 5rem;
-  }
-  .md\:mb-\[5rem\] {
-    margin-bottom: 5rem;
   }
   .md\:block {
     display: block;

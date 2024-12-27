@@ -139,7 +139,7 @@
 
   .login .form ul {
     position: relative;
-    top: 6.8rem;
+    top: 0;
     color: red;
   }
 
@@ -207,7 +207,7 @@
 
     .login .form ul {
       margin-left: 9rem;
-      top: 6.9rem;
+      top: 0;
     }
 
     input[type="submit"] {
